@@ -8,7 +8,9 @@ from . models import (
 
 from . serializers import (
     ProductSerializer,
-    CategorySerializer
+    CategorySerializer,
+    RetrieveProductSerializer,
+    RetrieveCategorySerializer
 )
 
 # Category List
@@ -24,4 +26,18 @@ class ListProduct(generics.ListAPIView):
     
     def get_queryset(self):
         return Product.objects.order_by('-id')
+    
+    
 
+class RetrieveProduct(generics.RetrieveAPIView):
+    permission_classes = [permissions.AllowAny, ]
+    queryset = Product.objects.all()
+    serializer_class = RetrieveProductSerializer
+    lookup_field = 'slug'
+
+
+class RetrieveCategory(generics.RetrieveAPIView):
+    permission_classes = [permissions.AllowAny, ]
+    queryset = Category.objects.all()
+    serializer_class = RetrieveCategorySerializer
+    lookup_field = 'slug'

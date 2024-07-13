@@ -26,3 +26,7 @@ class Product(models.Model):
     
     def __str__(self):
         return self.title
+    
+    @property
+    def related(self):
+        return self.category.products.all().exclude(id=self.id)
