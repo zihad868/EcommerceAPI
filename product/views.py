@@ -15,7 +15,7 @@ from . serializers import (
 
 # Category List
 class ListCategory(generics.ListAPIView):
-    permission_classes = [permissions.AllowAny, ]
+    permission_classes = [permissions.IsAdminUser, ]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -41,3 +41,9 @@ class RetrieveCategory(generics.RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = RetrieveCategorySerializer
     lookup_field = 'slug'
+    
+
+class CreateProduct(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny, ]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
