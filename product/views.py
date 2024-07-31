@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework import permissions
+from django.views.generic import TemplateView
 
 from . models import (
     Product, 
@@ -12,6 +13,11 @@ from . serializers import (
     RetrieveProductSerializer,
     RetrieveCategorySerializer
 )
+
+
+class Home(TemplateView):
+    template_name = 'Home/Home.html'
+
 
 # Category List
 class ListCategory(generics.ListAPIView):
@@ -43,7 +49,45 @@ class RetrieveCategory(generics.RetrieveAPIView):
     lookup_field = 'slug'
     
 
+# Create Product
 class CreateProduct(generics.CreateAPIView):
-    permission_classes = [permissions.AllowAny, ]
+    permission_classes = [permissions.IsAdminUser, ]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+# Update Product
+class UpdateProduct(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAdminUser, ]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'id'
+    
+
+# Destroy Product
+class DestroyProduct(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAdminUser, ]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'id'
+    
+    
+# Category API
+class CreateCategory(generics.CreateAPIView):
+    permission_classes = [permissions.IsAdminUser, ]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+# Update Category
+class UpdateCategory(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAdminUser, ]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    lookup_field = 'id'
+    
+
+# Destroy Category
+class DestroyCategory(generics.DestroyAPIView):
+    permission_classes = [permissions.IsAdminUser, ]
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    lookup_field = 'id'
